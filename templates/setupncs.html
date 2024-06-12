@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>CARE</title>
+    <!-- CSS  -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-icons.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/materialize.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+    <style type="text/css">
+    .btn-floating.btn-large {
+        width: 180px;
+        height: 106px;
+    }
+    </style>
+</head>
+
+<body class="white">
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/socket.io.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ez.countimer.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+                var types = {};
+                socket.on('mqtt_message', function(data) {})
+            }
+    </script>
+</body>
+
+</html>

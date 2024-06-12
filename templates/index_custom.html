@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>CARE</title>
+   <!-- CSS  -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-icons.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/materialize.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+    <style type="text/css">
+    .btn-floating.btn-large {
+  width: 306px;
+  height: 106px;
+}
+</style>
+  </head>
+<body class="white" >
+<audio id="myAudio" >
+        <source src="{{ url_for('static', filename='sound/bell.mp3') }}"type="audio/mp3"> </source></audio>
+<div>
+    <img src="{{ url_for('static', filename='images/header_2.png') }}" alt="Cinque Terre" width="100%"height="100%">
+  </div>
+     <table class="centered">
+        <tbody>
+            <tr>
+               <td style="width:12px;"></td> <!-- this is for space  -->
+            {%for i in range(1,loopvalue)%} <!-- 51 border: 1px solid rgb(169, 169, 169);-->
+            {%if(i<=actualbedcount)%} 
+                <td style="border: 3px solid rgb(0, 0, 0); width:134.8px;height:137.8px;"><div class="icon-block"><div class="row center"><a id="caller-effect-{{i}}"><h2 class="center grey-text" id="caller-node-{{i}}">{{dsptxt[i]}}</h2><i class="material-icons"><h6 class="center" id="caller-icon-{{i}}">remove</h6></i></a><div class="timer-{{i}}"></div></div></div></td>
+                {%endif%} 
+            {% if i%noofrows==0%} <!-- 10 -->
+            {% if i==totalbed%} <!-- 50 -->
+             <td style="width:12px;"></td> <!-- this is for space  -->
+            </tr>
+            {%else%}
+             <td style="width:12px;"></td> <!-- this is for space  -->
+            </tr><tr> <td style="width:12px;"></td> <!-- this is for space  -->
+            {%endif%} 
+            
+             {%endif%} 
+            
+            
+            {%endfor%} 
+
+        </tbody>
+      </table>
+   
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/socket.io.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ez.countimer.js') }}"></script>
+
+  <script>
+
+
+      $(document).ready(function() {
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            var audio = $("audio")[0];
+            var types = {};
+            $(this).css("background-color", "gray");
+            socket.on('mqtt_message', function(data) {
+                console.log(data);
+                var i=data['client'];
+                 if(data['payload']==='150')
+                    {
+                      audio.pause();
+                      audio.currentTime = 0;
+                     var ght= $('#caller-icon-' + i).text();
+                      if(ght==='150'){ } 
+                      else{$('#caller-icon-' + i).text('150');
+                            var xt=eval("boxbgchange_"+i);
+                            audio.loop=false;audio.play();
+                         types["ft"+i]=setInterval(xt, 60000);
+                  }
+                    $('#caller-node-' + i).removeClass('center grey-text'); 
+                    $('#caller-node-' + i).addClass('center');  
+                    $('#caller-effect-'+i).addClass('btn-floating btn-large pulse cyan ')
+                    $('.timer-'+i).countimer('start');
+                    audio.loop=false;audio.play();
+                    }
+                else if(data['payload']==='180')
+                    {
+                        var hogt= $('#caller-icon-' + i).text();
+                        if(hogt==='150'){$('#caller-effect-'+i).removeClass('cyan-red');}
+                        $('#caller-icon-' + i).text('remove');
+                        $('#caller-node-' + i).addClass('grey-text');
+                        $('#caller-effect-'+i).removeClass('btn-floating btn-large pulse cyan ');
+                        $('#caller-effect-'+i).removeClass('cyan-red');
+                       clearTimeout(types["ft"+i]);
+                      audio.pause();
+                      audio.currentTime = 0;
+                       $('.timer-'+i).countimer('stop');
+                    }
+
+                })
+           {%for i in range(1,actualbedcount+1)%}  /*51*/
+            function boxbgchange_{{i}} (){ $('#caller-effect-{{i}}').removeClass('cyan'); $('#caller-effect-{{i}}').addClass('cyan-red'); audio.loop=false;audio.play(); audio.src = '{{ url_for('static', filename='sound/bell.mp3') }}';audio.play();playAudio();}
+            $('.timer-{{i}}').countimer({autoStart : false});
+            
+            {%endfor%} 
+           
+
+           function playAudio(whataudio) { whataudio.loop=false;audio.play(); } 
+         
+      });
+     
+  </script>
+  </body>
+  </html>

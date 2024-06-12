@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>CARE</title>
+   <!-- CSS  -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-icons.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/materialize.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+    <style type="text/css">
+   .btn-floating.btn-large {
+  width: 100%;/*106*/
+  height: 100%;/*106*/
+}
+.btn-floating{
+  border-radius: 0%;
+}
+#square {
+  zoom:{{zommdata}};
+}
+
+[class^="timer-"]{
+
+	style="color:black;"
+}
+
+
+</style>
+  </head>
+<body class="white" >
+<audio id="myAudio" ><source src="{{ url_for('static', filename='sound/bell.mp3') }}"type="audio/mp3"> </source>
+
+
+</audio>
+<audio id="Audio_1" ><source src="{{ url_for('static', filename='cust_sound/1.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_2" ><source src="{{ url_for('static', filename='cust_sound/2.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_3" ><source src="{{ url_for('static', filename='cust_sound/3.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_4" ><source src="{{ url_for('static', filename='cust_sound/4.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_5" ><source src="{{ url_for('static', filename='cust_sound/5.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_6" ><source src="{{ url_for('static', filename='cust_sound/6.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_7" ><source src="{{ url_for('static', filename='cust_sound/7.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_8" ><source src="{{ url_for('static', filename='cust_sound/8.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_9" ><source src="{{ url_for('static', filename='cust_sound/9.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_10" ><source src="{{ url_for('static', filename='cust_sound/10.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_11" ><source src="{{ url_for('static', filename='cust_sound/11.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_12" ><source src="{{ url_for('static', filename='cust_sound/12.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_13" ><source src="{{ url_for('static', filename='cust_sound/13.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_14" ><source src="{{ url_for('static', filename='cust_sound/14.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_15" ><source src="{{ url_for('static', filename='cust_sound/15.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_16" ><source src="{{ url_for('static', filename='cust_sound/16.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_17" ><source src="{{ url_for('static', filename='cust_sound/17.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_18" ><source src="{{ url_for('static', filename='cust_sound/18.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_19" ><source src="{{ url_for('static', filename='cust_sound/19.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_20" ><source src="{{ url_for('static', filename='cust_sound/20.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_21" ><source src="{{ url_for('static', filename='cust_sound/21.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_22" ><source src="{{ url_for('static', filename='cust_sound/22.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_23" ><source src="{{ url_for('static', filename='cust_sound/23.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_24" ><source src="{{ url_for('static', filename='cust_sound/24.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_25" ><source src="{{ url_for('static', filename='cust_sound/25.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_26" ><source src="{{ url_for('static', filename='cust_sound/26.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_27" ><source src="{{ url_for('static', filename='cust_sound/27.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_28" ><source src="{{ url_for('static', filename='cust_sound/28.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_29" ><source src="{{ url_for('static', filename='cust_sound/29.mp3') }}"type="audio/mp3"> </source></audio>
+<audio id="Audio_30" ><source src="{{ url_for('static', filename='sound/bell.mp3') }}"type="audio/mp3"> </source></audio>
+<div>
+    <img src="{{ url_for('static', filename='images/title.png') }}" alt="Cinque Terre" width="100%"height="100%">
+  </div>
+ <!--  <div id="testing"> 12</div> -->
+<div id="square">
+     <table class="centered">
+        <tbody>
+            <tr>
+               <td style="width:12px;"></td> <!-- this is for space  -->
+            {%for i in range(1,loopvalue)%} <!-- 51 border: 1px solid rgb(169, 169, 169);-->
+            {%if(i<=actualbedcount)%} 
+                    <td style="border: 3px solid rgb(0, 0, 0); width:134.8px;height:137.8px; border-width:5px;border-style:solid;"><div class="icon-block"><div class="row center"><a id="caller-effect-{{i}}"><h2 class="center grey-text" id="caller-node-{{i}}"  style="font-size:100px;">{{dsptxt[i]}}</h2><h5><div  class="timer-{{i}}"></div></h5><i class="material-icons"><h6 class="center" id="caller-icon-{{i}}">remove</h6></i></a></div></div></td>
+                {%endif%} 
+            {% if i%noofcolumn==0%} <!-- 10 -->
+            {% if i==totalbed%} <!-- 50 -->
+             <td style="width:12px;"></td> <!-- this is for space  -->
+            </tr>
+            {%else%}
+             <td style="width:12px;"></td> <!-- this is for space  -->
+            </tr><tr> <td style="width:12px;"></td> <!-- this is for space  -->
+            {%endif%} 
+            
+             {%endif%} 
+            
+            
+            {%endfor%} 
+
+        </tbody>
+      </table>
+   
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/socket.io.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ez.countimer.js') }}"></script>
+
+  <script>
+
+
+      $(document).ready(function() {
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            //var audio = $("audio")[0];
+            var types = {};
+            $(this).css("background-color", "gray");
+            socket.on('mqtt_message', function(data) {
+                console.log(data);
+                var i=data['client'];
+                var ai=data['clientid'];
+                $('#testing').append("event main=>"+i+"=>ai=> "+ai);
+                 var boxname=data['boxname'];
+                 //boxname="402X"
+                 if(data['payload']==='150')
+                    {
+                      // audio.pause();
+                      // audio.currentTime = 0;
+                     var ght= $('#caller-icon-' + i).text();
+                     var currentname=$('#caller-node-' + i).text();
+                    
+                      if(ght==='150'){
+                        var crdata = currentname.match(/[a-zA-Z]/);
+                        var indata = boxname.match(/[a-zA-Z]/);
+                        console.log(typeof indata)
+                        if (indata === null){
+                        	console.log("Yess")
+                        	indata=''
+                        }
+                        // $('#testing').append(crdata+ 'SPACE');
+                        // $('#testing').append(indata+ 'SPACE');
+                        var n = currentname.includes(indata)
+                        console.log(n)
+                        if(n===true)
+                        {
+                        	console.log(boxname)
+                          }
+                     else{
+                        // $('#testing').append(currentname.concat(indata));
+                        $('#caller-node-' + i).text(currentname.concat(indata));
+                       }
+                        ///////////////////////////
+                        
+                        var bus=checkaudiocurrenttime();
+                        // $('#testing').append("bus[0]=>"+bus[0]);
+                        // $('#testing').append(" bus[1]=>"+bus[1]);
+                        if(bus[0]===1)
+                            {
+                              // $('#testing').append("insidebus[0]=>");
+                              if( $("audio")[bus[1]].paused )
+                              {
+                                $("audio")[0].pause();
+                                $("audio")[bus[1]].currentTime = 0;
+                                $("audio")[0].unbind();
+                                $("audio")[ai].currentTime = 0;
+                          $("audio")[ai].loop=false;
+                            $("audio")[ai].play();
+                            $("audio")[ai].onended=eval("removeaudio_"+ai);
+                            $("audio")[ai].currentTime = 0;
+                             // $('#testing').append("insidebus[1]=>");
+                              }else
+                              {
+                               $("audio")[bus[1]].onended=eval("audioplaylist_"+ai);
+                             $("audio")[ai].onended=eval("removeaudio_"+ai);
+                              $("audio")[ai].onended=eval("removeaudio_"+bus[1]);
+                              //$('#testing').append("insidebus[1] else=>");
+                              }
+                        
+                              
+                            }else{
+                            	$('#testing').append("event main=>"+i+"=>ai=> "+ai);
+                       // $('#testing').append("insidebus[0] elseet=>"+ai);
+                        $("audio")[ai].currentTime = 0;
+                          $("audio")[ai].loop=false;
+                            $("audio")[ai].play();
+                            $("audio")[ai].onended=eval("removeaudio_"+ai);
+                            $("audio")[ai].currentTime = 0;
+                            checkaudiocurrenttime();
+                            }
+
+                        ///////////////////////////////
+                        $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+
+                       } 
+                      else{
+                      	 $('#caller-node-' + i).removeClass('center grey-text'); 
+                    $('#caller-node-' + i).addClass('center');  
+                    $('#caller-effect-'+i).addClass('btn-floating btn-large pulse cyan ')
+                    $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+                      	$('#testing').append("event mainccc=>"+$('#caller-icon-' + i).text());
+                      	
+                      	$('#caller-icon-' + i).text('150');
+                      	console.log('Writing',boxname)
+                      $('#caller-node-' + i).text(boxname);
+                        var bus=checkaudiocurrenttime();
+                        $('#testing').append("bus[0]=>"+bus[0]);
+                        $('#testing').append(" bus[1]=>"+bus[1]);
+                        if(bus[0]===1)
+                            {
+                               $('#testing').append("insidebus[0]=>");
+                              if( $("audio")[bus[1]].paused )
+                              {
+                                $("audio")[0].pause();
+                                $("audio")[bus[1]].currentTime = 0;
+                                $("audio")[0].unbind();
+                                $("audio")[ai].currentTime = 0;
+                          $("audio")[ai].loop=false;
+                            $("audio")[ai].play();
+                            $("audio")[ai].onended=eval("removeaudio_"+ai);
+                            $("audio")[ai].currentTime = 0;
+                             // $('#testing').append("insidebus[1]=>");
+                              }else
+                              {
+                               $("audio")[bus[1]].onended=eval("audioplaylist_"+ai);
+                             $("audio")[ai].onended=eval("removeaudio_"+ai);
+                              $("audio")[ai].onended=eval("removeaudio_"+bus[1]);
+                             // $('#testing').append("insidebus[1] else=>");
+                              }
+                        
+                              
+                            }else{
+                        $('#testing').append("insidebus[0] elseet=>"+ai);
+                        $("audio")[ai].currentTime = 0;
+                        $('#testing').append("1");
+                          $("audio")[ai].loop=false;
+                          $('#testing').append("2");
+                            $("audio")[ai].play();
+                            $('#testing').append("3");
+                            $("audio")[ai].onended=eval("removeaudio_"+ai);
+                            $('#testing').append("4");
+                            $("audio")[ai].currentTime = 0;
+                            $('#testing').append("5");
+                            checkaudiocurrenttime();
+                             $('#testing').append("6");
+                            }
+
+                         var xt=eval("boxbgchange_"+i);
+                         types["ft"+i]=setInterval(xt, 60000);
+                         $('.timer-'+i).countimer('start');
+                      
+
+                  }
+                    $('#caller-node-' + i).removeClass('center grey-text'); 
+                    $('#caller-node-' + i).addClass('center');  
+                    $('#caller-effect-'+i).addClass('btn-floating btn-large pulse cyan ')
+                    // $('#testing').append("event main=>"+ $('#caller-icon-' + i).text);
+                    if( $('.timer-'+i).countimer('stopped'))
+                    {
+                    	 var xt=eval("boxbgchange_"+i);
+                         types["ft"+i]=setInterval(xt, 60000);
+                         $('.timer-'+i).countimer('start');
+
+
+                    }
+                    $('#testing').append("event main=>"+"here") ;
+                    //audio.loop=false;audio.play();
+                    }
+                else if(data['payload']==='180')
+                    {
+                                            var numbers = /^[0-9]+$/;
+                      var indataend = "/"+boxname.match(/[a-zA-Z]/)+"/";
+                      var replacenameddata=$('#caller-node-' + i).text()
+                      var replacename=replacenameddata.replace(eval(indataend), "");
+                        $('#caller-node-' + i).text(replacename)
+                        replacenameddata=$('#caller-node-' + i).text()
+                      if(replacenameddata.match(numbers))
+                      {
+                        var hogt= $('#caller-icon-' + i).text();
+                        if(hogt==='150'){
+                        	$('#caller-effect-'+i).removeClass('cyan-red');}
+                        $('#caller-icon-' + i).text('remove');
+                        $('#caller-node-' + i).addClass('grey-text');
+                        $('#caller-effect-'+i).removeClass('btn-floating btn-large pulse cyan ');
+                        $('#caller-effect-'+i).removeClass('cyan-red');
+                       clearTimeout(types["ft"+i]);
+                      $("audio")[ai].pause();
+                      $("audio")[ai].currentTime = 0;
+                       $('.timer-'+i).countimer('stop');
+                      $("audio")[ai].unbind();
+                    }
+                    $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+                  }
+
+                })
+            {%for i in range(1,37+1)%}  /*51*/
+            function boxbgchange_{{i}} (){ $('#caller-effect-{{i}}').removeClass('cyan'); $('#caller-effect-{{i}}').addClass('cyan-red'); 
+              // $("audio")[0].play();
+              beep();
+        }
+            $('.timer-{{i}}').countimer({autoStart : false});
+            
+            function audioplaylist_{{i}}(){
+            $("audio")[{{i}}].loop=false;
+             $("audio")[{{i}}].play(); 
+            // $("audio")[i].addEventListener('ended',eval(eval('removeaudio({{i}}')));
+            //$("audio")[{{i}}].removeEventListener('onended',eval('removeaudio{{i}}'));
+            //$("audio")[{{i}}].pause();
+            $("audio")[{{i}}].currentTime = 0;
+            //$("audio")[{{i}}].unbind();
+   
+            }
+            function removeaudio_{{i}}() {
+
+              $("audio")[{{i}}].pause();
+              $("audio")[{{i}}].currentTime = 0;
+              //$("audio")[{{i}}].removeEventListener('ended',eval('removeaudio{{i}}'));
+              $("audio")[{{i}}].unbind();
+              // body... 
+            }
+            {%endfor%} 
+            function beep() {
+              var car=checkaudiocurrenttime();
+              var duck=0;
+                        if(car[0]===1 )
+                            {
+                              if($("audio")[car[1]].paused)
+                              {
+                                $("audio")[0].pause();
+                                $("audio")[car[1]].currentTime = 0;
+                                $("audio")[0].unbind();
+                                 $("audio")[duck].currentTime = 0;
+                          $("audio")[duck].loop=false;
+                            $("audio")[duck].play();
+                            $("audio")[duck].onended=eval("removeaudio_"+duck);
+                            $("audio")[duck].currentTime = 0;
+                           // $('#testing').append("play beep=>");
+                              }else{
+                                $("audio")[car[1]].onended=eval("audioplaylist_"+duck);
+                             $("audio")[duck].onended=eval("removeaudio_"+duck);
+                              $("audio")[duck].onended=eval("removeaudio_"+car[1]);
+                            //  $('#testing').append("event beep=>"+$("audio")[car[1]].currentTime);
+                              }
+                            
+                              
+                            }else{
+                        $("audio")[duck].currentTime = 0;
+                          $("audio")[duck].loop=false;
+                            $("audio")[duck].play();
+                            $("audio")[duck].onended=eval("removeaudio_"+duck);
+                            $("audio")[duck].currentTime = 0;
+                           // checkaudiocurrenttime();
+                            }
+            }
+            function checkaudiocurrenttime()
+            {
+              var arr;
+              for( var i=0;i<{{actualbedcount+1}};i++)
+              {
+                if($("audio")[i].currentTime >0)
+                {
+                  arr=[1,i];
+                  return arr;
+                }
+              }
+              arr=[0,-1];
+              return arr;
+            }
+            function audioplaylist_0(){
+            $("audio")[0].loop=false;
+             $("audio")[0].play(); 
+            $("audio")[0].currentTime = 0;
+   
+            }
+            function removeaudio_0() { 
+
+              $("audio")[0].pause();
+              $("audio")[0].currentTime = 0;
+              $("audio")[0].unbind();
+}
+         
+      });
+     
+  </script>
+  </body>
+  </html>

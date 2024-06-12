@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+</head>
+
+<style> 
+label {
+    /*display: block;*/
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+h2 {
+  margin-bottom:0;
+}
+h3 {
+  margin:0 0 30px;
+} 
+
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+</style>
+
+
+
+<body>
+<label for="meeting-time">Set Time:</label>
+
+<input type="datetime-local" id="datetime"
+       name="datetime" value={{datenow}}>
+
+<button id="updtime">Update Time</button>
+<!-- <button onClick="showDateTime()">Update Time</button> -->
+<div class="slidecontainer">
+	<label>Zoom Percentage:</label>
+  <input id="zoomslider" type="range" min="1" max="300" value={{zoomvalue}} class="slider" id="myRange" oninput="show_value(this.value)";>
+  <span id="slider_value" style="color:blue;">{{zoomvalue}}</span>
+  <button id="updzoom">Update PageZoom</button>
+
+</div>
+
+
+ <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+
+<script>
+  
+function show_value(x)
+{
+ document.getElementById("slider_value").innerHTML=x;
+}
+
+$('#updtime').on('click',function(){
+  var datetime=document.getElementById("datetime").value
+var data={
+  value:datetime,
+  dataFrom:"Time"
+}
+console.log(typeof data)
+ $.ajax({
+  type: "POST",
+  url: "/settings",
+  data: JSON.stringify(data),
+  dataType:'json'
+ 
+});
+})
+
+$('#updzoom').on('click',function(){
+  var zoomSize=document.getElementById("zoomslider").value
+var data={
+  value:zoomSize,
+  dataFrom:"Zoom"
+}
+console.log(typeof data)
+ $.ajax({
+  type: "POST",
+  url: "/settings",
+  data: JSON.stringify(data),
+  dataType:'json'
+ 
+});
+})
+
+  
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>

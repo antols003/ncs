@@ -1,0 +1,76 @@
+
+import sqlite3
+from sqlite3 import Error
+from user import *
+def create_connection():
+
+	#SQLite DB Table Schema
+	TableSchema="""
+	drop table if exists NCSHistory ;
+	create table NCSHistory (
+	  id integer primary key autoincrement,
+	  SwitchID text,
+	  Date_n_Time text,
+	  Status text,
+	  unique (SwitchID, Date_n_Time,Status)
+	);
+	drop table if exists appsetting ;
+	create table appsetting (id integer primary key autoincrement,
+	    settingname text not null,
+	    settingvalue text not null,
+	    unique (settingname)
+	);
+	drop table if exists bednaming ;
+	create table bednaming (
+	id integer primary key autoincrement,
+	deviceid integer,
+	bedname integer,
+	unique (deviceid, bedname)
+	);
+	drop table if exists restroomnaming ;
+	create table restroomnaming (
+	id integer primary key autoincrement,
+	deviceid text,
+	restroomname text,
+	unique (deviceid, restroomname)
+	);
+	drop table if exists devicetobedmapping ;
+	create table devicetobedmapping (
+	id integer primary key autoincrement,
+	deviceid integer,
+	bedname text,
+	boxid integer,
+	unique (deviceid, bedname,boxid)
+	);
+	drop table if exists doorlightnaming ;
+	create table doorlightnaming (
+	id integer primary key autoincrement,
+	deviceid text,
+	doorlightname text,
+	unique (deviceid, doorlightname)
+	);
+	drop table if exists brstmapping ;
+	create table brstmapping (
+	id integer primary key autoincrement,
+	deviceid integer,
+	bedname text,
+	restroomname text,
+	doorlightname text,
+	unique (deviceid,bedname, restroomname,doorlightname)
+	);
+	"""
+	conn = None
+	curs = None
+	try:
+		conn = sqlite3.connect(DB_Name)
+		curs = conn.cursor()
+		sqlite3.complete_statement(TableSchema)
+		curs.executescript(TableSchema)
+	except Error as e:
+		print(e)
+	finally:
+		if conn:
+			curs.close()
+			conn.close()
+if __name__ == '__main__':
+    create_connection()

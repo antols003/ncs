@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+	<title>Nurse Calling System Report</title>
+	
+	 <script src="{{ url_for('static', filename='js/report/jquery-3.5.1.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/jquery.dataTables.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/dataTables.buttons.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/jszip.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/pdfmake.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/vfs_fonts.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/buttons.html5.min.js') }}"></script>
+	 <script src="{{ url_for('static', filename='js/report/buttons.print.min.js') }}"></script>
+	 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/report/jquery.dataTables.min.css') }}">
+	 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/report/buttons.dataTables.min.css') }}">
+     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/report/dataTables.dateTime.min.css') }}">
+
+     <script src="{{ url_for('static', filename='js/report/moment.min.js') }}"></script>
+     <script src="{{ url_for('static', filename='js/report/dataTables.dateTime.min.js') }}"></script>
+
+<style type="text/css">
+table.dataTable tbody tr {
+    background-color: #FAF0CA
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background-color: #c2d2f7c2
+}
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd {
+    background-color: #c2d2f7c2
+}
+table.dataTable.display tbody tr.even>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background-color: #FAF0CA
+}
+</style>
+</head>
+<body>
+    <table cellspacing="5" cellpadding="5" border="0">
+        <tbody><tr>
+            <td>Start date: </td>
+            <td><input type="text" id="min" name="min"></td>
+       <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>End date: </td>
+            <td><input type="text" id="max" name="max"></td>
+        </tr>
+    </tbody></table>
+<br/>
+<table id="report" class="display nowrap" style="width:100%">
+        <thead style="background-color:#0D3B66; color: white;">
+            <tr>
+                <th>Nursing Station</th>
+                <th>Calling Unit</th>
+                <th>Call Initiated Time</th>
+                <th>Call Cleared Time</th>
+                <th>TAT</th>
+                <th>Escalation</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        	{%for datas in data:%} 
+            <tr>
+                <td>{{datas[0]}}</td>
+                <td>{{datas[1]}}</td>
+                <td>{{datas[3]}}</td>
+                <td>{{datas[4]}}</td>
+                <td>{{datas[5]}}</td>
+                <td>{{datas[6]}}</td>
+            </tr>
+            {%endfor%} 
+        </tbody>
+        <tfoot style="background-color:#0D3B66; color: white;">
+            <tr>
+          <th>Nursing Station</th>
+                <th>Calling Unit</th>
+                <th>Call Initiated Time</th>
+                <th>Call Cleared Time</th>
+                <th>TAT</th>
+                <th>Escalation</th>
+            </tr>
+        </tfoot>
+    </table>
+ 
+ 
+<script type="text/javascript">
+    var minDate, maxDate;
+ 
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data[2] );
+        console.log(date,"date");
+         console.log(data[2],"data[2]");
+         console.log(min,"min");
+         console.log(max,"max");
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max ) ||min == date
+        ) {
+            return true;
+        }
+       
+        return false;
+    }
+);
+
+	$(document).ready(function() {
+
+            minDate = new DateTime($('#min'), {
+        format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#max'), {
+        format: 'MMMM Do YYYY'
+    });
+
+    var table =$('#report').DataTable( {
+                "scrollX": true,
+        "sScrollX": "100%",
+        orderCellsTop: true,
+          dom: 'Bfrtip',
+        buttons: [
+                 {
+            extend: 'copy',
+            title : function() {
+                return "Nurse Calling Sytem Report";
+            },
+            text : 'Copy',
+        },
+        {
+            extend: 'excel',
+            title : function() {
+                return "Nurse Calling Sytem Report";
+            },
+            text : 'Excel',
+        },
+        {
+            extend : 'print',
+            title : function() {
+                return "Nurse Calling Sytem Report";
+            },
+            text : ' Print',
+        },
+{
+            extend : 'pdfHtml5',
+            title : function() {
+                return "Nurse Calling Sytem Report";
+            },
+            orientation : 'landscape',
+            pageSize : 'A4',
+            text : 'PDF',
+            titleAttr : 'PDF',
+            exportOptions: {columns: 'th:not(:first-child)'},
+        }
+        ],
+        autoWidth:true,
+        Responsive:true,
+        columnDefs: [
+    {
+        targets: "_all",
+        className: 'dt-head-center',
+        className: 'dt-body-center',
+
+    }
+  ]
+    } );
+      $('#min, #max').on('change', function () {
+        table.draw();
+    });
+} );
+</script>
+</body>
+</html>

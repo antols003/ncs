@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>CARE</title>
+   <!-- CSS  -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/material-icons.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/materialize.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+    <style type="text/css">
+   .btn-floating.btn-large {
+  width: 100%;/*106*/
+  height: 100%;/*106*/
+}
+ul[class^=suf_timer-] {
+  line-height: 20px;
+  /*border: 15px solid white;
+  border-color:transparent;*/
+  padding: 0;
+  margin:0;
+  display:none;
+}
+.btn-floating{
+  border-radius: 0%;
+}
+#square {
+  zoom:{{zommdata}};
+}
+h6[id^=caller-icon-]
+{
+  display:none;
+  visibility: hidden;
+  max-height: 0;
+}
+
+div[class^="timer-"]{
+  display:none;
+}
+div[class^="atimer-"]{
+  /*display:none;*/
+  font-size: 50px;
+  border: 15px solid white;
+  border-color:transparent;
+  
+}
+
+div[class^="switchname-"]{
+  display:none;
+
+}
+h1[id^=caller-node-]{
+  font-size: 100px;
+  margin-bottom: 0;
+  margin:0;
+}
+.Suffix{
+  margin:0;
+  font-size: 80px;
+  border: 15px solid white;
+  border-color:transparent;
+}
+
+.wrapper{
+  display: inline-flex;  
+  flex-wrap: wrap;
+  /*column-gap: 40px;*/
+  /*gap: 50px;*/
+  flex-direction: row;
+  /*justify-content: space-around;*/
+  /*padding : 1rem;*/
+
+  /*border: 1px solid black;*/
+   /*display: flex;
+   flex-flow: wrap;
+   border-right:solid 1px white
+   justify-content: space-between;
+   list-style: none;
+   margin: 0;*/
+   /*padding: 0;*/
+
+}
+
+.pulsespeed::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: inherit;
+    border-radius: inherit;
+    transition: opacity .3s, -webkit-transform .3s;
+    transition: opacity .3s, transform .3s;
+    transition: opacity .3s, transform .3s, -webkit-transform .3s;
+    -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    animation: pulse-animation .5s cubic-bezier(1,0,0,1) infinite;
+    z-index: -1;
+  }
+
+
+.centered{
+  table-layout: fixed;
+}
+
+#custlogo{
+    width:200px;
+    height:100px;
+    margin: auto 0;
+    float:left;
+    position: absolute;
+    left:40%;
+    z-index:200;
+
+}
+
+</style>
+  </head>
+<body class="white" >
+
+
+
+<audio id="myAudio" ><source src="{{ url_for('static', filename='sound/bellemg.mp3') }}"type="audio/mp3"> </source></audio>
+{%for i in range(1,BT_swcount)%}
+<audio id="Audio_{{i}}"><source src="{{ url_for('static', filename='cust_sound/')}}{{i}}{{'.mp3' }}"type="audio/mp3"> </source></audio>
+{%endfor%}
+<audio  id="varAudio" ><source src="{{ url_for('static', filename='') }}"type="audio/mp3"> </source></audio>
+
+<!-- {%for i in range(1,48)%} 
+<div class="atimer-{{i}}"></div>
+{%endfor%}  -->
+
+<div>
+    <img src="{{ url_for('static', filename='images/title.png') }}" alt="Cinque Terre" width="100%"height="100%">
+  </div>
+<!-- 
+ <div id="custlogo" >
+      <img src="{{ url_for('static', filename='customer_logo/logo.png') }}" width="100%"height="100%">
+  </div> -->
+  
+ <!--  <div id="testing"> 12</div> -->
+<div id="square">
+     <table class="centered">
+        <tbody>
+            <tr>
+               <td style="width:4px;"></td> <!-- this is for space !!293.8px 137.8 -->
+            {%for i,aud in BxSwitches.items()%} <!-- 51 border: 1px solid rgb(169, 169, 169);-->
+            {%if(i<=actualbedcount)%} 
+            <!-- <div class="timer-{{i}}"></div> -->
+                    <td style="border: 5px solid rgb(0, 0, 0); width:134.8px; height:296px; "><div class="icon-block"><div class="row center"><a id="caller-effect-{{i}}"><h1 class="center grey-text" id="caller-node-{{i}}"><b>{{dsptxt[i]}}</b></h1><div class="wrapper">{%for ai in aud%}<ul class="suf_timer-{{ai}}"><li ><h1 class="Suffix" id="Suffix-{{ai}}"></h1><div class="atimer-{{ai}}"></div></li></ul>{%endfor%}</div><i class="material-icons"><h6 class="center" id="caller-icon-{{i}}">remove</h6></i></a></div></div></td>
+                {%endif%} 
+            {% if i%noofcolumn==0%} <!-- 10 -->
+            {% if i==totalbed%} <!-- 50 -->
+             <td style="width:4px;"></td> <!-- this is for space  -->
+            </tr>
+            {%else%}
+             <td style="width:4px;"></td> <!-- this is for space  -->
+            </tr><tr> <td style="width:4px;"></td> <!-- this is for space  -->
+            {%endif%} 
+            
+             {%endif%} 
+            
+            
+            {%endfor%} 
+
+        </tbody>
+      </table>
+
+   
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{url_for('static', filename='js/socket_3_1_2.io.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ez.countimer.js') }}"></script>
+
+  <script>
+
+
+      $(document).ready(function() {
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            //var audio = $("audio")[0];
+            var types = {};
+            var audlist=[];
+            var repeatlist=[];
+            var currentAud="";
+            
+            $(this).css("background-color", "gray");
+            socket.on('reload', function(data) {
+              console.log("Reload Request Recieved..!!")
+                  window.location.reload();
+              });
+            socket.on('mqtt_message', function(data) {
+                console.log(data);
+                //console.log("bala")
+                var i=data['client'];
+                var ai=data['clientid'];
+                $('#testing').append("event main=>"+i+"=>ai=> "+ai);
+                 var boxname=data['boxname'];
+                 var boxSuff=data['suffix'];
+
+                 console.log("After Return")
+                 if (boxSuff=="-" || boxSuff==' '){
+                  console.log("boxSuff Empty")
+                  document.getElementById("Suffix-"+ai).style.opacity="0";
+                  document.getElementById("caller-effect-"+i).style.height="296px";
+                  boxSuff="X"
+                  //document.getElementById("caller-node-"+i).style.padding="30px";
+
+                 }
+                 document.getElementById("caller-effect-"+i).style.height="296px";
+                 var newAudio=document.getElementById('varAudio');
+                 var path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',ai);
+                 console.log(path);
+                 if(data['payload']==='150'  || data['payload']==='210' )
+                    {
+                      // console.log("Audio Play")
+                    
+                     const index = audlist.indexOf(ai);
+                     if(index==-1 && data['payload']==='150'){
+                     audlist.push(ai);
+                     console.log('Audio List - Add',audlist,audlist.length);
+                     }//newAudio.src=
+                     if(audlist.length==1 && newAudio.currentTime==0) {
+                            console.log("Not Avoided");
+                            newAudio.src=path;
+                  newAudio.play();
+                  currentAud=ai;
+                  const index = audlist.indexOf(currentAud);
+                  if (index > -1) {
+                      audlist.splice(index, 1);
+                      }
+                }
+                console.log(newAudio.paused,newAudio.currentTime,!newAudio.ended)
+                     
+document.getElementById('varAudio').addEventListener('ended',myHandler,false);
+    function myHandler(e) {
+      //audlist.splice(0, 1);
+      console.log(e,"Ended",audlist,audlist.length);
+      newAudio.pause();
+      //newAudio.load();
+      newAudio.currentTime=0;
+      
+      if (audlist.length>=1)
+      {
+      console.log("Play Next")
+      currentAud=audlist[0];
+      path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',currentAud);
+      newAudio.src=path;
+      newAudio.play();
+      console.log("Playing:",currentAud)
+      const index = audlist.indexOf(currentAud);
+      if (index > -1) {
+          audlist.splice(index, 1);
+         }
+      }
+      else if(repeatlist.length>=1)
+      {
+      //repeatlist.splice(0, 1);
+      console.log("Repeat Next")
+      currentAud=repeatlist[0];
+      path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',currentAud);
+      newAudio.src=path;
+      newAudio.play();
+      console.log("Playing:",currentAud)
+      const rindex = repeatlist.indexOf(currentAud);
+      if (rindex > -1) {
+          repeatlist.splice(rindex, 1);
+         }
+      }
+
+      e.stopImmediatePropagation();
+      
+        // What you want to do after the event
+    }
+                      if(data['payload']==='210'){
+                        console.log("Long Press")
+                        $('.atimer-'+ai).countimer({enableEvents: true}).on('second', function(evt, time){
+                      //console.log("timer",time);
+                        if(time.original.seconds%1==0){//time
+
+                        console.log("Emergency",time.original.seconds)
+                        //var xt=eval("boxbgchange_"+i);
+                        //xt();
+                        beep();
+                    
+                    }
+                    if(time.original.minutes==3 && time.original.seconds==0){
+                        console.log('Escalated..!!')
+                        socket.emit('escalate',ai);
+                      }
+                      });
+                        $('.atimer-'+ai).countimer('start')
+                      }
+                      if(data['payload']==='150'){
+                        $('.atimer-'+ai).countimer({enableEvents: true}).on('second', function(evt, time){
+                      //console.log("timer",time);
+
+                      if(time.original.minutes==3 && time.original.seconds==0){
+                        console.log('Escalated..!!')
+
+                        socket.emit('escalate',ai);
+                      }
+                        if(time.original.minutes>0 && time.original.seconds==0){//time
+                        var xt=eval("boxbgchange_"+i);
+                        xt();
+                        const rindex = repeatlist.indexOf(ai);
+                      if(rindex==-1){
+                        repeatlist.push(ai);
+                      }
+                        console.log("repeatlist:",repeatlist);
+                        if(audlist.length<1 && newAudio.currentTime==0 && repeatlist.length==1){
+                          path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',ai);
+                          newAudio.src=path;
+                          newAudio.play();
+                          currentAud=ai;
+                          const rindex = repeatlist.indexOf(currentAud);
+                          if (rindex > -1) {
+                            repeatlist.splice(rindex, 1);
+                                   }
+                        }  
+                    }
+                      });
+                        $('.atimer-'+ai).countimer('start')
+                        
+                      }
+                      document.getElementById("Suffix-"+ai).innerHTML = boxSuff;
+                      // $('.atimer-'+ai).show();
+                      $('.suf_timer-'+ai).show();
+                      // audio.pause();
+                      // audio.currentTime = 0;
+                     var ght= $('#caller-icon-' + i).text();
+                     var currentname=$('#caller-node-' + i).text();
+                    
+                      if(ght==='150' || ght==='210'){
+                        var crdata = currentname.match(/[a-zA-Z]/);
+                        var indata = boxname.match(/[a-zA-Z]/);
+                        // $('#testing').append(crdata+ 'SPACE');
+                        // $('#testing').append(indata+ 'SPACE');
+                        var n = currentname.includes(indata)
+                        if(n===true)
+                        {
+                          }
+                     else{
+                       
+                       }
+                        
+                        $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+
+                       } 
+                      else{
+                         $('#caller-node-' + i).removeClass('center grey-text'); 
+                    $('#caller-node-' + i).addClass('center');  
+                    $('#caller-effect-'+i).addClass('btn-floating btn-large pulse cyan ')
+                    $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+                        $('#testing').append("event mainccc=>"+$('#caller-icon-' + i).text());
+                        
+                        $('#caller-icon-' + i).text(data['payload']);
+                      
+                  }
+                    $('#caller-node-' + i).removeClass('center grey-text'); 
+                    $('#caller-node-' + i).addClass('center');
+                    if(data['payload']==='210'){
+                      $('#caller-effect-'+i).addClass('btn-floating btn-large pulsespeed cyan-red ')
+                    }
+                    else{
+                    $('#caller-effect-'+i).addClass('btn-floating btn-large pulse cyan ')
+                  }
+                    // $('#testing').append("event main=>"+ $('#caller-icon-' + i).text);
+                    if( $('.timer-'+i).countimer('stopped'))
+                    {
+                        
+
+                       
+                    }
+                    $('#testing').append("event main=>"+"here") ;
+                    //audio.loop=false;audio.play();
+                    }
+                else if(data['payload']==='180')
+                    {
+                      //var newAudio=document.getElementById('varAudio')
+                      console.log("Current Playing",currentAud)
+                      const index = audlist.indexOf(ai);
+                      const rindex = repeatlist.indexOf(ai);
+                        if (index > -1) {
+                            audlist.splice(index, 1);
+                              }
+                         if (rindex > -1) {
+                            repeatlist.splice(rindex, 1);
+                              }
+
+                      if(currentAud==ai){
+                      newAudio.pause();
+                      newAudio.currentTime=0; 
+                        }
+                        if (audlist.length>=1 && newAudio.currentTime==0)
+              {
+              console.log("Play Next")
+              currentAud=audlist[0];
+              path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',currentAud);
+                      newAudio.src=path;
+              newAudio.play();
+               const index = audlist.indexOf(currentAud);
+                 if (index > -1) {
+                  audlist.splice(index, 1);
+                 }
+            console.log("Playing:",currentAud)
+              }
+              else if (repeatlist.length>=1 && newAudio.currentTime==0)
+              {
+              console.log("Play Next")
+              currentAud=repeatlist[0];
+              path="{{ url_for('static', filename='cust_sound/-.mp3') }}".replace('-',currentAud);
+                      newAudio.src=path;
+              newAudio.play();
+              console.log("Playing:",currentAud)
+              const rindex = repeatlist.indexOf(currentAud);
+                if (rindex > -1) {
+                    repeatlist.splice(rindex, 1);
+                   }
+              }
+
+                      
+                        
+                      //audlist.shift();
+                      console.log('Audio List - Remove',audlist);
+                      // console.log("AudioID:",ai)
+                      $('.atimer-'+ai).countimer('stop');
+                      $('.atimer-'+ai).countimer('destroy');
+                     
+                      $('.suf_timer-'+ai).removeAttr("style").hide();
+                      document.getElementById("caller-node-"+i).style.padding="0px";
+
+
+                      
+                                            var numbers = /^[0-9]+$/;
+                      var indataend = "/"+boxname.match(/[a-zA-Z]/)+"/";
+                      var replacenameddata=$('#caller-node-' + i).text()
+                      var replacename=replacenameddata.replace(eval(indataend), "");
+                       //$('#caller-node-' + i).text(replacename)
+                        replacenameddata=$('#caller-node-' + i).text()
+                      //if(replacenameddata.match(numbers))
+                      if(data['Effect']==false)
+                      {
+                        var hogt= $('#caller-icon-' + i).text();
+                        if(hogt==='150' || hogt==='210'){
+                          $('#caller-effect-'+i).removeClass('cyan-red');}
+                        $('#caller-icon-' + i).text('remove');
+                        $('#caller-node-' + i).addClass('grey-text');
+                        $('#caller-effect-'+i).removeClass('btn-floating btn-large pulse cyan ');
+                        $('#caller-effect-'+i).removeClass('btn-floating btn-large pulsespeed cyan-red ');
+                        $('#caller-effect-'+i).removeClass('cyan-red');
+                       clearTimeout(types["ft"+i]);
+                     
+                    }
+                    $('#testing').append("event main=>"+ $('#caller-icon-' + i).text());
+                  }
+
+                })
+            {%for i in range(1,BT_swcount)%}  /*51*/
+            function boxbgchange_{{i}} (){ $('#caller-effect-{{i}}').removeClass('cyan'); $('#caller-effect-{{i}}').addClass('cyan-red'); 
+              // $("audio")[0].play();
+              //beep();
+        }
+             //$('.timer-{{i}}').countimer({autoStart : false});
+            
+            function audioplaylist_{{i}}(){
+              // console.log("AudioPlay:",{{i}})
+            $("audio")[{{i}}].loop=false;
+             $("audio")[{{i}}].play(); 
+            
+            $("audio")[{{i}}].currentTime = 0;
+            //$("audio")[{{i}}].unbind();
+   
+            }
+            function removeaudio_{{i}}() {
+
+              $("audio")[{{i}}].pause();
+              $("audio")[{{i}}].currentTime = 0;
+              //$("audio")[{{i}}].removeEventListener('ended',eval('removeaudio{{i}}'));
+              //$("audio")[{{i}}].unbind();
+              // body... 
+            }
+            {%endfor%} 
+            function beep() {
+              var car=checkaudiocurrenttime();
+              var duck=0;
+                        if(car[0]===1 )
+                            {
+                              if($("audio")[car[1]].paused)
+                              {
+                                $("audio")[0].pause();
+                               // $("audio")[car[1]].currentTime = 0;
+                                $("audio")[0].unbind();
+                                 $("audio")[duck].currentTime = 0;
+                          $("audio")[duck].loop=false;
+                            $("audio")[duck].play();
+                            $("audio")[duck].onended=eval("removeaudio_"+duck);
+                            $("audio")[duck].currentTime = 0;
+                           // $('#testing').append("play beep=>");
+                              }else{
+                                $("audio")[car[1]].onended=eval("audioplaylist_"+duck);
+                             $("audio")[duck].onended=eval("removeaudio_"+duck);
+                              $("audio")[duck].onended=eval("removeaudio_"+car[1]);
+                            //  $('#testing').append("event beep=>"+$("audio")[car[1]].currentTime);
+                              }
+                            
+                              
+                            }else{
+                        $("audio")[duck].currentTime = 0;
+                          $("audio")[duck].loop=false;
+                            $("audio")[duck].play();
+                            $("audio")[duck].onended=eval("removeaudio_"+duck);
+                            $("audio")[duck].currentTime = 0;
+                           // checkaudiocurrenttime();
+                            }
+            }
+            function checkaudiocurrenttime()
+            {
+              var arr;
+              for( var i=0;i<{{actualbedcount+1}};i++)
+              {
+                if($("audio")[i].currentTime >0)
+                {
+                  arr=[1,i];
+                  return arr;
+                }
+              }
+              arr=[0,-1];
+              return arr;
+            }
+            function audioplaylist_0(){
+            $("audio")[0].loop=false;
+             $("audio")[0].play(); 
+            $("audio")[0].currentTime = 0;
+   
+            }
+            function removeaudio_0() { 
+
+              $("audio")[0].pause();
+              $("audio")[0].currentTime = 0;
+             // $("audio")[0].unbind();
+}
+         
+      });
+     
+  </script>
+  </body>
+  </html>

@@ -1,0 +1,58 @@
+insert into devicetobedmapping (deviceid,bedname,boxid) values(1,"201A",1);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(2,"201B",1);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(3,"202A",2);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(4,"202B",2);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(5,"203",3);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(6,"204",4);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(7,"205",5);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(8,"206",6);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(9,"207",7);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(10,"201T",1);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(11,"202T",2);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(12,"203T",3);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(13,"204T",4);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(14,"205T",5);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(15,"206T",6);
+insert into devicetobedmapping (deviceid,bedname,boxid) values(16,"207T",7);
+
+------------
+
+insert into bednaming (deviceid,bedname) values(1,"201");
+insert into bednaming (deviceid,bedname) values(2,"202");
+insert into bednaming (deviceid,bedname) values(3,"203");
+insert into bednaming (deviceid,bedname) values(4,"204");
+insert into bednaming (deviceid,bedname) values(5,"205");
+insert into bednaming (deviceid,bedname) values(6,"206");
+insert into bednaming (deviceid,bedname) values(7,"207");
+
+------------
+
+insert into restroomnaming (deviceid,restroomname) values("10","201T");
+insert into restroomnaming (deviceid,restroomname) values("11","202T");
+insert into restroomnaming (deviceid,restroomname) values("12","203T");
+insert into restroomnaming (deviceid,restroomname) values("13","204T");
+insert into restroomnaming (deviceid,restroomname) values("14","205T");
+insert into restroomnaming (deviceid,restroomname) values("15","206T");
+insert into restroomnaming (deviceid,restroomname) values("16","207T");
+
+-------
+
+insert into doorlightnaming (deviceid,doorlightname) values("10","201DL");
+insert into doorlightnaming (deviceid,doorlightname) values("11","202DL");
+insert into doorlightnaming (deviceid,doorlightname) values("12","203DL");
+insert into doorlightnaming (deviceid,doorlightname) values("13","204DL");
+insert into doorlightnaming (deviceid,doorlightname) values("14","205DL");
+insert into doorlightnaming (deviceid,doorlightname) values("15","206DL");
+insert into doorlightnaming (deviceid,doorlightname) values("16","207DL");
+
+--------
+
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(1,"201A","201T","201DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(2,"201B","201T","201DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(3,"202A","202T","202DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(4,"202B","202T","202DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(5,"203","203T","203DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(6,"204","204T","204DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(7,"205","205T","205DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(8,"206","206T","206DL");
+insert into brstmapping (deviceid,bedname, restroomname,doorlightname) values(9,"207","207T","207DL");
