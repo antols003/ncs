@@ -28,7 +28,7 @@ ul[class^=suf_timer-] {
   border-radius: 0%;
 }
 #square {
-  zoom:{{zommdata}};
+  zoom:zommdata;
 }
 h6[id^=caller-icon-]
 {
@@ -84,7 +84,7 @@ h1[id^=caller-node-]{
 
 }
 body{
-  zoom:{{zoomdata}};
+  zoom:zoomdata;
 }
 
 .pulsespeed::before {
@@ -561,20 +561,20 @@ document.getElementById('varAudio').addEventListener('ended',myHandler,false);
             function audioplaylist_{{i}}(){
               // console.log("AudioPlay:",{{i}})
             $("audio")[{{i}}].loop=false;
-             $("audio")[{{i}}].play(); 
-            
+            $("audio")[{{i}}].play();
+              
             $("audio")[{{i}}].currentTime = 0;
             //$("audio")[{{i}}].unbind();
-   
+            
             }
-            function removeaudio_{{i}}() {
+            function removeaudio_ {{i}}() {
 
-              $("audio")[{{i}}].pause();
-              $("audio")[{{i}}].currentTime = 0;
+              $("audio")[{i}].pause();
+              $("audio")[{i}].currentTime = 0;
               //$("audio")[{{i}}].removeEventListener('ended',eval('removeaudio{{i}}'));
               //$("audio")[{{i}}].unbind();
               // body...
-            }
+             }
             {%endfor%} 
             function beep() {
               var car=checkaudiocurrenttime();

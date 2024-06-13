@@ -35,15 +35,15 @@ booted = False
 eventlet.monkey_patch()
 
 # Initialize MQTT broker settings
-mqtt_broker_url = '592064494bdf49e08ada99aed1f6890e.s1.eu.hivemq.cloud/mqtt'
-mqtt_broker_port = 8884
-mqtt_username = 'admin'
-mqtt_password = 'admin@123'
+mqtt_broker_url = '5ccaf87576e04605a3c0b13e35dd0680.s1.eu.hivemq.cloud'
+mqtt_broker_port = 8883
+mqtt_username = 'jerish716'
+mqtt_password = 'jerish716'
 mqtt_topic = 'my/test/topic'
 mqtt_topic_light = 'topic_light'
 
 page_zoom = readsetting("pagezoom")
-DB_Name = readsetting("DB_Name")
+DB_Name = readsetting("datafarm")
 activeData = {}
 
 app = Flask(__name__)
@@ -56,7 +56,6 @@ app.config['MQTT_KEEPALIVE'] = 5
 app.config['MQTT_TLS_ENABLED'] = True
 app.config['MQTT_CLIENT_ID'] = 'rpibroker'
 app.config['MQTT_TLS_VERSION'] = ssl.PROTOCOL_TLS  # Use highest TLS version
-app.config['MQTT_TRANSPORT'] = 'websockets'
 
 mqtt = Mqtt(app)
 socketio = SocketIO(app)
@@ -165,13 +164,12 @@ def index():
     return render_template('index.html', noofcolumn=noofcolumn, totalbed=totalbed, loopvalue=loopvalue, zommdata=page_zoom, actualbedcount=actualbedcount, dsptxt=dsptxt, audFiles=audFiles, BT_swcount=tdev + 1, BxSwitches=BxSwitches)
 
 @mqtt.on_connect()
-# def handle_connect(client, userdata, flags, rc):
-#     print("mqtt connected")
-#     mqtt.subscribe(mqtt_topic, 1)
-#     mqtt.subscribe('Tool/ToolData')
-
-
-def telegrqam
+def handle_connect(client, userdata, flags, rc):
+    print("mqtt connected")
+    mqtt.subscribe(mqtt_topic, 1)
+    mqtt.subscribe('Tool/ToolData')
+    global booted
+    booted = True  # Set booted to True once connected to the MQTT broker
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
@@ -181,7 +179,18 @@ def handle_mqtt_message(client, userdata, message):
         if not booted:
             print("NOT YET LOADED!!")
             return
-        topictmp, clienttmp = message.topic.split("/", 1)
+
+        print(f"Received message: {message.payload} on topic: {message.topic}")
+
+        # Ensure the topic has the correct format
+        topic_parts = message.topic.split("/", 1)
+        if len(topic_parts) != 2:
+            print(f"Unexpected topic format: {message.topic}")
+            return
+
+        topictmp, clienttmp = topic_parts
+        print(f"Topictmp: {topictmp}, Clienttmp: {clienttmp}")
+
         if topictmp == 'Tool' and clienttmp == 'ToolData':
             print("Data From Tool")
             jsonData = message.payload.decode()
@@ -194,37 +203,64 @@ def handle_mqtt_message(client, userdata, message):
             from subprocess import call
             call("sudo reboot now", shell=True)
         else:
-            getclientid = clienttmp
+            # Retrieve box data
             modfiedboxdata = retrivebox(clienttmp)
-            clienttmp = modfiedboxdata[0][0]
+            if not modfiedboxdata or len(modfiedboxdata) == 0:
+                print(f"retrivebox() returned empty data for clienttmp: {clienttmp}")
+                return
+
+            client_id = modfiedboxdata[0][0]
             boxsuffix = modfiedboxdata[0][1][-1]
             if boxsuffix.isnumeric():
                 boxsuffix = "-"
+
+            print(f"Modified box data: {modfiedboxdata}")
+
             data = dict(
                 topic=topictmp,
-                client=clienttmp,
+                client=client_id,
                 boxname=modfiedboxdata[0][1],
                 payload=message.payload.decode(),
-                clientid=getclientid,
+                clientid=clienttmp,
                 suffix=boxsuffix
             )
-            cid = int(getclientid)
+
+            print(f"Data: {data}")
+
             if data['payload'] in ["150", "210", "250"] and booted:
-                activeData[clienttmp][cid] = True
+                if client_id in activeData:
+                    activeData[client_id][clienttmp] = True
+                else:
+                    print(f"Client ID '{client_id}' not found in activeData")
             elif data['payload'] == "180" and booted:
-                activeData[clienttmp][cid] = False
-            data['Effect'] = any(activeData[clienttmp].values())
+                if client_id in activeData:
+                    activeData[client_id][clienttmp] = False
+                else:
+                    print(f"Client ID '{client_id}' not found in activeData")
+
+            data['Effect'] = any(activeData[client_id].values())
             socketio.emit('mqtt_message', data=data)
+
             t1 = datetime.datetime.strptime(boottime, "%Y-%m-%d %H:%M:%S")
             t2 = datetime.datetime.now()
             t3 = t2 - t1
             print(data)
-    except Exception as e:
-        print(e)
 
-@mqtt.on_log()
-def handle_logging(client, userdata, level, buf):
-    print("log: ", buf)
+    except Exception as e:
+        print(f"Exception: {e}")
+
+
+
+
+
+
+
+
+
+
+# @mqtt.on_log()
+# def handle_logging(client, userdata, level, buf):
+#     print("log: ", buf)
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=5000)
