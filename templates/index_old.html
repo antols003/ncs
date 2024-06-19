@@ -28,7 +28,7 @@
             <tr>
                <td style="width:12px;"></td> <!-- this is for space  -->
             {%for i in range(1,loopvalue)%} <!-- 51 border: 1px solid rgb(169, 169, 169);-->
-            {%if(i<=actualbedcount)%} 
+            {%if(i<=actualbedcount)%}
                 <td style="border: 3px solid rgb(0, 0, 0); width:134.8px;height:137.8px;"><div class="icon-block"><div class="row center"><a id="caller-effect-{{i}}"><h2 class="center grey-text" id="caller-node-{{i}}">{{dsptxt[i]}}</h2><i class="material-icons"><h6 class="center" id="caller-icon-{{i}}">remove</h6></i></a><div class="timer-{{i}}"></div></div></div></td>
                 {%endif%} 
             {% if i%noofrows==0%} <!-- 10 -->
@@ -88,7 +88,7 @@
                 else if(data['payload']==='180')
                     {
                         var hogt= $('#caller-icon-' + i).text();
-                        if(hogt==='150'){$('#caller-effect-'+i).removeClass('cyan-red');}
+                        if(hogt==='150'){$('#caller-effect-'+i).removeClass('cyan-red');}{%for i in range(1,actualbedcount+1)%}
                         $('#caller-icon-' + i).text('remove');
                         $('#caller-node-' + i).addClass('grey-text');
                         $('#caller-effect-'+i).removeClass('btn-floating btn-large pulse cyan ');
@@ -100,7 +100,7 @@
                     }
 
                 })
-           {%for i in range(1,actualbedcount+1)%}  /*51*/
+            {%for i in range(1,,actualbedcount+1)%}/*51*/
             function boxbgchange_{{i}} (){ $('#caller-effect-{{i}}').removeClass('cyan'); $('#caller-effect-{{i}}').addClass('cyan-red'); audio.loop=false;audio.play(); audio.src = '{{ url_for('static', filename='sound/bell.mp3') }}';audio.play();playAudio();}
             $('.timer-{{i}}').countimer({autoStart : false});
             

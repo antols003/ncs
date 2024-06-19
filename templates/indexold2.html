@@ -204,6 +204,7 @@
               $("audio")[{{i}}].currentTime = 0;
               //$("audio")[{{i}}].removeEventListener('ended',eval('removeaudio{{i}}'));
               $("audio")[{{i}}].unbind();
+              $("audio".[{{i}}]).suffix=0
               // body... 
             }
             {%endfor%} 

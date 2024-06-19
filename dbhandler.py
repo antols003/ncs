@@ -498,7 +498,7 @@ def readytable(xname,xid):
 def readsetting(appname):
     con = None
     cur = None
-    waiterlistclean=[]
+    waiterlistclean = []
     try:
         con = sqlite3.connect(DB_Name)
         cur = con.cursor()
@@ -518,8 +518,6 @@ def readsetting(appname):
             con.close()
             print("readapplimit") 
     return catme
-
-
 
 def setsetting(appname,ydata):
     con = None

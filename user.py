@@ -1,6 +1,6 @@
 from getmyip import *
-mqtt_username = "oora"
-mqtt_password = "oora"
+mqtt_username = "jerish716"
+mqtt_password = "jerish716"
 mqtt_topic = "NCS01/#"
 mqtt_broker_ip = get_ip()
 print("IP Address is:" + get_ip())
